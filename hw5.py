@@ -48,6 +48,34 @@
 #    following symptoms:
 #    ['fever', 'cough', 'anosmia']
 
+class Patient:
+    def __init__(self, name, symptoms):
+        self.name = name
+        self.symptoms = symptoms
+
+    def add_test(self, test_name, test_results):
+        self.test_name = test_name
+        self.test_results = test_results
+        return 'Test added successfully!'
+    
+    def has_covid(self):
+        if(self.test_name=='covid'):
+            if(self.test_results):
+                cov_prob = 0.99
+            else:
+                cov_prob = 0.01 
+        else:
+            cov_prob = 0.05
+            for indicative_symptom in ['fever', 'cough', 'anosmia']:
+                if(indicative_symptom in self.symptoms):
+                    cov_prob += 0.1
+        return cov_prob 
+
+pat_189023 = Patient("Lainey", ['cough','dizziness','fever'])
+print(pat_189023.add_test('HEP B',True))
+print(pat_189023.has_covid())
+
+
 
 ######################
 
@@ -66,8 +94,27 @@
 # The constructor will create an English Deck (suits: Hearts, Diamonds, Clubs, Spades and values: A, 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K). It will create a list of cards that contain each of the existing cards in an English Deck.
 # Create a method called "shuffle" that shuffles the cards randomly. 
 # Create a method called "draw" that will draw a single card and print the suit and value. When a card is drawn, the card should be removed from the deck.
+import random
 
+class Card:
+    def __init__(self, suit, value):
+        self.suit = suit
+        self.value = value
 
+class Deck:
+    def __init__(self):
+        self._english_deck = [Card(x, y) for x in ['Hearts', 'Diamonds', 'Clubs', 'Spades'] for y in ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J','Q', 'K']]
+    
+    def shuffle(self):
+        return random.shuffle(self._english_deck)
+    
+    def draw(self):
+        card_drawn = self._english_deck.pop()
+        print(card_drawn.suit, card_drawn.value)
+
+new_deck = Deck()
+new_deck.shuffle()
+new_deck.draw()
 
 ###################
 
@@ -83,3 +130,58 @@
 # 3.3 Create a child class called "Rectangle" that inherits from "PlaneFigure" and has as parameters in the constructor "a", "b" (sides of the rectangle). Implement the abstract methods with the formula of the rectangle.
 
 # 3.3 Create a child class called "Circle" that inherits from "PlaneFigure" and has as parameters in the constructor "radius" (radius of the circle). Implement the abstract methods with the formula of the circle.
+
+from abc import ABCMeta, abstractmethod
+import math
+
+class PlaneFigure (metaclass=ABCMeta):        
+    @abstractmethod    
+    def compute_perimeter(self):
+        return NotImplementedError
+    
+    @abstractmethod    
+    def compute_surface(self):
+        return NotImplementedError
+
+class Triangle(PlaneFigure):
+    def __init__(self, base, c1, c2, h):
+        self.base = base
+        self.c1 = c1
+        self.c2 = c2
+        self.h = h
+    
+    def compute_perimeter(self):
+        return self.base + self.c1 + self.c2
+    
+    def compute_surface(self):
+        return self.base * self.h / 2
+    
+class Rectangle(PlaneFigure):
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+    
+    def compute_perimeter(self):
+        return self.a*2 + self.b*2
+    
+    def compute_surface(self):
+        return self.a * self.b
+
+class Circle(PlaneFigure):
+    def __init__(self, radius):
+        self.radius = radius
+    
+    def compute_perimeter(self):
+        return 2*math.pi*self.radius
+    
+    def compute_surface(self):
+        return 2*math.pi*(self.radius**2)/2
+
+tria = Triangle(5, 5, 5, 6.5)
+print(tria.compute_perimeter(), tria.compute_surface())
+
+rect = Rectangle(10, 7)
+print(rect.compute_perimeter(), rect.compute_surface())
+
+circ = Circle(10)
+print(circ.compute_perimeter(), circ.compute_surface())
