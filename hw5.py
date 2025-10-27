@@ -52,10 +52,12 @@ class Patient:
     def __init__(self, name, symptoms):
         self.name = name
         self.symptoms = symptoms
+        self.tests = {}
 
     def add_test(self, test_name, test_results):
         self.test_name = test_name
         self.test_results = test_results
+        self.tests[self.test_name] = self.test_results
         return 'Test added successfully!'
     
     def has_covid(self):
@@ -72,9 +74,8 @@ class Patient:
         return cov_prob 
 
 pat_189023 = Patient("Lainey", ['cough','dizziness','fever'])
-print(pat_189023.add_test('HEP B',True))
-print(pat_189023.has_covid())
-
+print(pat_189023.add_test("covid",True))
+print(f'Prob. Covid: {pat_189023.has_covid()}')
 
 
 ######################
@@ -106,7 +107,7 @@ class Deck:
         self._english_deck = [Card(x, y) for x in ['Hearts', 'Diamonds', 'Clubs', 'Spades'] for y in ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J','Q', 'K']]
     
     def shuffle(self):
-        return random.shuffle(self._english_deck)
+        random.shuffle(self._english_deck)
     
     def draw(self):
         card_drawn = self._english_deck.pop()
@@ -175,7 +176,7 @@ class Circle(PlaneFigure):
         return 2*math.pi*self.radius
     
     def compute_surface(self):
-        return 2*math.pi*(self.radius**2)/2
+        return math.pi*(self.radius**2)
 
 tria = Triangle(5, 5, 5, 6.5)
 print(tria.compute_perimeter(), tria.compute_surface())
