@@ -18,12 +18,6 @@
 # the parameters should be stored as attributes
 # called "name" and "symptoms" respectively
 
-class Patient:
-
-    def __init__(self, name, symptoms):
-        self.name = name
-        self.symptoms = symptoms
-
 
 #
 # 1.2)
@@ -33,11 +27,6 @@ class Patient:
 # 2. the results of the test (bool)
 #
 # This information should be stored somehow.
-
-        self.tests = {}
-
-    def add_test(self, name_test, result_test):
-        self.tests[name_test] = result_test
 
 
 #
@@ -59,20 +48,34 @@ class Patient:
 #    following symptoms:
 #    ['fever', 'cough', 'anosmia']
 
-    def has_covid(self):
-        if "covid" in self.tests:
-            if self.tests["covid"]:
-                return 0.99
-            else:
-                return 0.01
-        else:
-            p = 0.05
-            covid_symptoms = ["fever", "cough", "anosmia"]
-            for symptom in covid_symptoms:
-                if symptom in self.symptoms:
-                    p += 0.1
-            return min(p, 1)
+class Patient:
+    def __init__(self, name, symptoms):
+        self.name = name
+        self.symptoms = symptoms
+        self.tests = {}
 
+    def add_test(self, test_name, test_results):
+        self.test_name = test_name
+        self.test_results = test_results
+        self.tests[self.test_name] = self.test_results
+        return 'Test added successfully!'
+    
+    def has_covid(self):
+        if(self.test_name=='covid'):
+            if(self.test_results):
+                cov_prob = 0.99
+            else:
+                cov_prob = 0.01 
+        else:
+            cov_prob = 0.05
+            for indicative_symptom in ['fever', 'cough', 'anosmia']:
+                if(indicative_symptom in self.symptoms):
+                    cov_prob += 0.1
+        return cov_prob 
+
+pat_189023 = Patient("Lainey", ['cough','dizziness','fever'])
+print(pat_189023.add_test("covid",True))
+print(f'Prob. Covid: {pat_189023.has_covid()}')
 
 
 ######################
@@ -127,67 +130,67 @@ class Deck:
 # 3. In this exercise you will create an interface that will serve as template 
 # for different figures to compute their perimeter and surface. 
 
-
-# 3.1 Create an abstract class (interface) called "PlaneFigure" with two abstract methods:
+# 3.1Create an abstract class (interface) called "PlaneFigure" with two abstract methods:
 # compute_perimeter() that will implement the formula to compute the perimiter of the plane figure.
 # compute_surface() that will implement the formula to compute the surface of the plane figure.
 
-from abc import ABCMeta, abstractmethod
-
-class PlaneFigure(metaclass=ABCMeta):
-
-    @abstractmethod
-    def compute_perimeter(self):
-        pass
-    
-    @abstractmethod
-    def compute_surface(self):
-        pass
-
-
 # 3.2 Create a child class called "Triangle" that inherits from "PlaneFigure" and has as parameters in the constructor "base", "c1", "c2", "h". ("base" being the base, "c1" and "c2" the other two sides of the triangle and "h" the height). Implement the abstract methods with the formula of the triangle.
 
-class Triangle(PlaneFigure):
+# 3.3 Create a child class called "Rectangle" that inherits from "PlaneFigure" and has as parameters in the constructor "a", "b" (sides of the rectangle). Implement the abstract methods with the formula of the rectangle.
 
+# 3.3 Create a child class called "Circle" that inherits from "PlaneFigure" and has as parameters in the constructor "radius" (radius of the circle). Implement the abstract methods with the formula of the circle.
+
+from abc import ABCMeta, abstractmethod
+import math
+
+class PlaneFigure (metaclass=ABCMeta):        
+    @abstractmethod    
+    def compute_perimeter(self):
+        return NotImplementedError
+    
+    @abstractmethod    
+    def compute_surface(self):
+        return NotImplementedError
+
+class Triangle(PlaneFigure):
     def __init__(self, base, c1, c2, h):
         self.base = base
         self.c1 = c1
         self.c2 = c2
         self.h = h
-
+    
     def compute_perimeter(self):
         return self.base + self.c1 + self.c2
     
     def compute_surface(self):
-        return (self.base * self.h) / 2
-
-
-# 3.3 Create a child class called "Rectangle" that inherits from "PlaneFigure" and has as parameters in the constructor "a", "b" (sides of the rectangle). Implement the abstract methods with the formula of the rectangle.
-
+        return self.base * self.h / 2
+    
 class Rectangle(PlaneFigure):
-
     def __init__(self, a, b):
         self.a = a
         self.b = b
     
     def compute_perimeter(self):
-        return (self.a * 2) + (self.b * 2)
+        return self.a*2 + self.b*2
     
     def compute_surface(self):
         return self.a * self.b
-    
-
-# 3.4 Create a child class called "Circle" that inherits from "PlaneFigure" and has as parameters in the constructor "radius" (radius of the circle). Implement the abstract methods with the formula of the circle.
-
-import math
 
 class Circle(PlaneFigure):
-
     def __init__(self, radius):
         self.radius = radius
     
     def compute_perimeter(self):
-        return 2 * math.pi * self.radius
+        return 2*math.pi*self.radius
     
     def compute_surface(self):
-        return math.pi * (self.radius ** 2)
+        return math.pi*(self.radius**2)
+
+tria = Triangle(5, 5, 5, 6.5)
+print(tria.compute_perimeter(), tria.compute_surface())
+
+rect = Rectangle(10, 7)
+print(rect.compute_perimeter(), rect.compute_surface())
+
+circ = Circle(10)
+print(circ.compute_perimeter(), circ.compute_surface())
