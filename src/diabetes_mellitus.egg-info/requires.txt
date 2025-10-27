@@ -1,0 +1,5 @@
+datetime>=5.5
+geopy>=2.4.1
+ipykernel>=7.1.0
+pandas>=2.3.3
+scikit-learn>=1.7.2
