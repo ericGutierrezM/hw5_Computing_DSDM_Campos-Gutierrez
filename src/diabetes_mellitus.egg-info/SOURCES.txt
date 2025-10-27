@@ -1,0 +1,7 @@
+README.md
+pyproject.toml
+src/diabetes_mellitus.egg-info/PKG-INFO
+src/diabetes_mellitus.egg-info/SOURCES.txt
+src/diabetes_mellitus.egg-info/dependency_links.txt
+src/diabetes_mellitus.egg-info/requires.txt
+src/diabetes_mellitus.egg-info/top_level.txt

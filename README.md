@@ -1,1 +1,1 @@
-# hw5_Computing_DSDM_Campos-Gutierrez
+### HW5. Computing for Data Science (DSDM). Daniel Campos & Eric Gutiérrez. 27th October 2025.

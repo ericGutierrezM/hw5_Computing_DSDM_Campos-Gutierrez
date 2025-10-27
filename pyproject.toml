@@ -1,7 +1,21 @@
+[build-system]
+requires = ["setuptools>=65.5.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "hw5-computing-dsdm-campos-gutierrez"
+name = "diabetes-mellitus"  # Must match package folder!
 version = "0.1.0"
-description = "Add your description here"
+description = "Diabetes prediction pipeline"
 readme = "README.md"
-requires-python = ">=3.13"
-dependencies = []
+requires-python = ">=3.10"
+dependencies = [
+    "datetime>=5.5",
+    "geopy>=2.4.1",
+    "ipykernel>=7.1.0",
+    "pandas>=2.3.3",
+    "scikit-learn>=1.7.2",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["diabetes_mellitus*"]
