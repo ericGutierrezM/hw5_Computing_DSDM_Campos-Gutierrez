@@ -86,36 +86,44 @@ print(f'Prob. Covid: {pat_189023.has_covid()}')
 #
 # the Deck class should represent the collection of cards and actions on them
 
+
 # 2.1) Create a Card class called "Card".
 # The constructor (__init__ ) should have two parameters the "suit" and the "value" and the suit of the card.
 # The class should store both as attributes.
+
+class Card:
+
+    def __init__(self, suit, value):
+        self.suit = suit
+        self.value = value
 
 
 # 2.2) Create a Deck class called "Deck".
 # The constructor will create an English Deck (suits: Hearts, Diamonds, Clubs, Spades and values: A, 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K). It will create a list of cards that contain each of the existing cards in an English Deck.
 # Create a method called "shuffle" that shuffles the cards randomly. 
 # Create a method called "draw" that will draw a single card and print the suit and value. When a card is drawn, the card should be removed from the deck.
+
 import random
 
-class Card:
-    def __init__(self, suit, value):
-        self.suit = suit
-        self.value = value
-
 class Deck:
-    def __init__(self):
-        self._english_deck = [Card(x, y) for x in ['Hearts', 'Diamonds', 'Clubs', 'Spades'] for y in ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J','Q', 'K']]
-    
-    def shuffle(self):
-        random.shuffle(self._english_deck)
-    
-    def draw(self):
-        card_drawn = self._english_deck.pop()
-        print(card_drawn.suit, card_drawn.value)
 
-new_deck = Deck()
-new_deck.shuffle()
-new_deck.draw()
+    def __init__(self):
+        suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
+        values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
+        self.english_deck = [Card(suit, value) for suit in suits for value in values]
+
+    def shuffle(self):
+        random.shuffle(self.english_deck)
+
+    def draw(self):
+        if not self.english_deck:
+            print("All cards have been drawn.")
+            return None
+        card_drawn = self.english_deck.pop()
+        print(f"{card_drawn.value} of {card_drawn.suit}")
+        return card_drawn
+
+
 
 ###################
 
