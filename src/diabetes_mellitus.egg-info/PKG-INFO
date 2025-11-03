@@ -8,6 +8,9 @@ Requires-Dist: datetime>=5.5
 Requires-Dist: geopy>=2.4.1
 Requires-Dist: ipykernel>=7.1.0
 Requires-Dist: pandas>=2.3.3
+Requires-Dist: pytest>=8.4.2
+Requires-Dist: pytest-cov>=7.0.0
 Requires-Dist: scikit-learn>=1.7.2
 
-# hw5_Computing_DSDM_Campos-Gutierrez
+### HW5. Computing for Data Science (DSDM). Daniel Campos & Eric Gutiérrez. 27th October 2025.
+The notebook used for testing the library is the file _test.ipynb_ inside the **notebook** folder.

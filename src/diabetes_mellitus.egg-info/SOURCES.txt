@@ -5,3 +5,6 @@ src/diabetes_mellitus.egg-info/SOURCES.txt
 src/diabetes_mellitus.egg-info/dependency_links.txt
 src/diabetes_mellitus.egg-info/requires.txt
 src/diabetes_mellitus.egg-info/top_level.txt
+test/test_hw5_q1.py
+test/test_hw5_q2.py
+test/test_hw5_q3.py
